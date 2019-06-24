@@ -3,7 +3,7 @@ const UserModel = require('./model')
 
 
 class User{
-    async render(req,res){
+    renderShow(req,res){
         return res.render( path.join(__dirname, 'views' , 'show') )
     }
 
@@ -16,8 +16,12 @@ class User{
         }
     }
 
+    renderStore(req,res){
+        return res.render( path.join(__dirname, 'views' , 'store') )
+    }
+
     async store(req,res){
-        
+
     }
 }
 
