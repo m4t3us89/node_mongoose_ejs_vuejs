@@ -1,0 +1,15 @@
+<%- contentFor('body') %>
+<div class="jumbotron text-center">
+    <div id="task">
+        {{ msg }}
+    </div>
+</div>
+
+<script>
+new Vue({
+    el:'#task',
+    data:{
+        msg: 'Olá Mundo.'
+    }
+})
+</script>
