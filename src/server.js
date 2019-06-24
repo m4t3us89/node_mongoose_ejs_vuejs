@@ -15,6 +15,9 @@ app.use(express.urlencoded(
     {extended: true}
 ))
 
+//DEFIIR PARA ACEITAR REQUISIÇÕES DO TIPO JSON NO BODY
+app.use(express.json())
+
 
 //LOG DAS REQUISIÇÕES NO CONSOLE
 app.use(morgan('dev'))
