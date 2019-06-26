@@ -7,7 +7,7 @@ router.get('/' , User.renderShow)
 router.get('/show' , verifyToken, User.show)
 
 router.get('/store' , User.renderStore)
-router.post('/store' , verifyToken, User.store)
+router.post('/store' , User.store)
 
 
 module.exports = (app)=> app.use('/user' , router) 

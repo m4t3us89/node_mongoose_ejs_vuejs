@@ -21,7 +21,13 @@ class User{
     }
 
     async store(req,res){
-
+        try{
+            const user = await UserModel.create(req.body)
+            user.password = undefined
+            return res.status(201).json(user)
+        }catch(err){
+            return res.status(400).json(err)
+        }
     }
 }
 

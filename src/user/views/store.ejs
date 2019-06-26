@@ -20,20 +20,38 @@
     <div id="user">
         <div id="box">
            
-            <form @submit.prevent="logar">
+            <form @submit.prevent="store">
 
                 
                 <span  v-html="alert ? alert : ''"></span>
-              
+                
+                <div class="form-group row">
+                  
+                        <input type="text"  class="form-control" placeholder="first_name" v-model="user.first_name">
+                   
+                </div>
 
                 <div class="form-group row">
                   
-                        <input type="text"  class="form-control" id="staticEmail" >
+                        <input type="text"  class="form-control"  placeholder="last_name" v-model="user.last_name">
                    
                 </div>
+
+                <div class="form-group row">
+                  
+                        <input type="text"  class="form-control"  placeholder="email" v-model="user.email">
+                   
+                </div>
+
                 <div class="form-group row">
                    
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Password" >
+                        <input type="password" class="form-control" placeholder="username" v-model="user.username">
+                   
+                </div>
+
+                <div class="form-group row">
+                   
+                        <input type="password" class="form-control" placeholder="password" v-model="user.password">
                    
                 </div>
                 <div class="form-group row">
@@ -54,10 +72,38 @@
 new Vue({
     el:'#user',
     data:{
-        loading: false
+        loading: false,
+        user : {
+            first_name : '',
+            last_name: '',
+            email: '',
+            username: '',
+            password: '',
+
+        },
+        alert: null,
     },
     methods: {
-     
+        async store(){
+            try{
+                const user = await axiosInstance.post('/user/store' , this.user)
+                console.log(user)
+            }catch(err){
+                const data = err.response.data
+                if(data.name == 'ValidationError'){
+                    var msg = ''
+                    Object.keys( data.errors ).forEach(err=>{ 
+                        msg = msg + data.errors[err].message  + '<br>'
+                    })
+                    this.alert = `<div class="alert alert-danger row"><b>${msg}</b></div>`
+                }else if(data.name == 'MongoError' && data.code == 11000){
+                    this.alert = `<div class="alert alert-danger row"><b>${data.errmsg}</b></div>`
+                    console.log(data)
+                }else{
+                    this.alert = `<div class="alert alert-danger row"><b>Tente novamente</b></div>`
+                }
+            }
+        }
     },
 })
 </script>
